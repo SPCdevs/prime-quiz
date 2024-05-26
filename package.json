@@ -6,27 +6,33 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "prettier . --check && next lint",
+    "format": "prettier . --write"
   },
+  "type": "module",
   "dependencies": {
     "@nextui-org/button": "^2.0.31",
     "@nextui-org/link": "^2.0.29",
     "@nextui-org/react": "^2.3.6",
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
     "framer-motion": "^11.2.6",
     "next": "14.2.3",
+    "prettier": "^3.2.5",
     "prisma": "^5.14.0",
     "react": "^18",
     "react-dom": "^18",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
-    "typescript": "^5.4.5",
     "@types/node": "^20.12.12",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.5"
   }
 }
