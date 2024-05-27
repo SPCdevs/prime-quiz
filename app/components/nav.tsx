@@ -6,6 +6,7 @@ import {
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 const NavigationBar = () => {
   return (
@@ -14,8 +15,10 @@ const NavigationBar = () => {
         <p className="font-bold text-inherit">PrimeQuiz</p>
       </NavbarBrand>
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
-        <NavbarItem isActive>
-          <Link aria-current="page">Home</Link>
+        <NavbarItem>
+          <Link color="foreground" href="/">
+            Home
+          </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
@@ -30,12 +33,15 @@ const NavigationBar = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+          <Link href="/login">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button as={Link} color="primary" href="/signup" variant="flat">
             Sign Up
           </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <ThemeSwitcher />
         </NavbarItem>
       </NavbarContent>
     </Navbar>
