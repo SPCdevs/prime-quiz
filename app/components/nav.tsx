@@ -26,13 +26,13 @@ const NavigationBar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/create">
             <Plus className="mr-1 h-4 w-4" /> Create
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            <GraduationCap className="mr-1 h-4 w-4" /> About
+            <GraduationCap className="mr-1 h-4 w-4" /> Browse
           </Link>
         </NavbarItem>
       </NavbarContent>
