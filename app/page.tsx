@@ -8,12 +8,12 @@ export default function Page() {
         Welcome to PrimeQuiz, the ultimate social media quiz app where knowledge
         meets fun! Our platform allows users to create and share their own
         trivia quizzes, challenging friends and the community with exciting and
-        engaging questions. Whether you're a trivia master or just love to learn
-        new facts, PrimeQuiz offers a space for you to both test your knowledge
-        and discover new trivia. On our site, you can solve a variety of quizzes
-        created by other users, spanning diverse topics and difficulty levels.
-        Connect with others, share your creations, and climb the leaderboard in
-        this vibrant trivia community!
+        engaging questions. Whether you are a trivia master or just love to
+        learn new facts, PrimeQuiz offers a space for you to both test your
+        knowledge and discover new trivia. On our site, you can solve a variety
+        of quizzes created by other users, spanning diverse topics and
+        difficulty levels. Connect with others, share your creations, and climb
+        the leaderboard in this vibrant trivia community!
       </p>
       <div>
         <img

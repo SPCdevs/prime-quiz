@@ -3,31 +3,36 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import { Home, Plus, GraduationCap } from "lucide-react";
 
 const NavigationBar = () => {
   return (
     <Navbar shouldHideOnScroll>
+      <NavbarMenuToggle className="sm:hidden" />
       <NavbarBrand>
         <p className="font-bold text-inherit">PrimeQuiz</p>
       </NavbarBrand>
-      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+      <NavbarContent className="hidden gap-8 sm:flex" justify="center">
         <NavbarItem>
           <Link color="foreground" href="/">
-            Home
+            <Home className="mr-1 h-4 w-4" /> Home
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            Post
+            <Plus className="mr-1 h-4 w-4" /> Create
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            About
+            <GraduationCap className="mr-1 h-4 w-4" /> About
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -44,6 +49,23 @@ const NavigationBar = () => {
           <ThemeSwitcher />
         </NavbarItem>
       </NavbarContent>
+      <NavbarMenu>
+        <NavbarMenuItem>
+          <Link color="foreground" href="/">
+            <Home className="mr-1 h-4 w-4" /> Home
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link color="foreground" href="#">
+            <Plus className="mr-1 h-4 w-4" /> Create
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link color="foreground" href="#">
+            <GraduationCap className="mr-1 h-4 w-4" /> About
+          </Link>
+        </NavbarMenuItem>
+      </NavbarMenu>
     </Navbar>
   );
 };
