@@ -11,8 +11,8 @@ export default function Login() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <Card className="w-[400px] flex-col p-8">
+    <main className="flex items-center justify-center ">
+      <Card className="m-8 mt-[20vh] w-[400px] flex-col p-8">
         <CardBody>
           <p className="pb-5 text-center text-3xl font-bold">Login</p>
           <div className="w-full flex-wrap gap-4 md:flex-nowrap">

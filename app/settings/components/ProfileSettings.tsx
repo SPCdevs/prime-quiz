@@ -6,7 +6,7 @@ import { Button } from "@nextui-org/button";
 
 export default function ProfileSettings() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <h3 className="text-lg font-medium">Profile</h3>
         <p className="text-muted-foreground text-sm">
@@ -14,19 +14,16 @@ export default function ProfileSettings() {
         </p>
       </div>
       <User
-        name="Jane Doe"
+        name="Display Name"
         description={<div className="text-primary">@uesrname</div>}
       />
       <Textarea
         label="Bio"
         variant="bordered"
         placeholder="Tell bit about your self."
-        classNames={{
-          base: "max-w-xs",
-          input: "resize-y min-h-[40px]",
-        }}
+        className="min-h-[40px] w-5/6 resize-y"
       />
-      <Button color="primary" variant="bordered">
+      <Button color="primary" variant="flat">
         Save
       </Button>
     </div>
