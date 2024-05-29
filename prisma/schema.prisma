@@ -35,4 +35,5 @@ model Post {
     title  String
     userId String
     user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
+    answers Json
 }

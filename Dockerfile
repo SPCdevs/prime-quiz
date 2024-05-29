@@ -9,4 +9,4 @@ RUN bun run build --no-lint
 # run the app
 USER bun
 EXPOSE 3020/tcp
-ENTRYPOINT [ "bun", "run", "start" ]
+ENTRYPOINT [ "bun", "--bun" ,"run", "start" ]
