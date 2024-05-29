@@ -5,10 +5,34 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id          String    @id @default(uuid())
+    username    String    @unique
+    displayName String
+    email       String    @unique
+    password    String
+    sessions    Session[]
+    posts       Post[]
+}
+
+model Session {
+    id        String   @id
+    expiresAt DateTime
+    userId    String
+    user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Post {
+    id     String @id @default(uuid())
+    title  String
+    userId String
+    user   User   @relation(references: [id], fields: [userId], onDelete: Cascade)
 }

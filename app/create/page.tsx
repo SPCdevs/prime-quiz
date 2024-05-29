@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from "react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Checkbox } from "@nextui-org/checkbox";
-import {Textarea} from "@nextui-org/input";
+import { Textarea } from "@nextui-org/input";
 import { Trash, Plus, Send } from "lucide-react";
 
 const CreateTrivia = () => {
-  const [question, setQuestion] = useState('');
-  const [options, setOptions] = useState(['', '']);
-  const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState(["", ""]);
+  const [correctAnswer, setCorrectAnswer] = useState<null | string>(null);
 
   const handleOptionChange = (index: number, value: string) => {
     const newOptions = [...options];
@@ -19,14 +19,14 @@ const CreateTrivia = () => {
   };
 
   const handleAddOption = () => {
-    setOptions([...options, '']);
+    setOptions([...options, ""]);
   };
 
   const handleRemoveOption = (index: number) => {
     const newOptions = options.filter((_, i) => i !== index);
     setOptions(newOptions);
     if (correctAnswer === options[index]) {
-      setCorrectAnswer(null); 
+      setCorrectAnswer(null);
     }
   };
 
@@ -34,7 +34,7 @@ const CreateTrivia = () => {
     setCorrectAnswer(option);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const triviaData = {
       question,
@@ -45,10 +45,8 @@ const CreateTrivia = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h1 className="mb-6 text-3xl text-center">
-        Create a Trivia Question
-      </h1>
+    <div className="mx-auto max-w-xl p-4">
+      <h1 className="mb-6 text-center text-3xl">Create a Trivia Question</h1>
       <form onSubmit={handleSubmit}>
         <Textarea
           isRequired
@@ -60,7 +58,7 @@ const CreateTrivia = () => {
           className="mb-6"
         />
         {options.map((option, index) => (
-          <div key={index} className="flex items-center mb-4">
+          <div key={index} className="mb-4 flex items-center">
             <Input
               fullWidth
               isClearable
@@ -76,16 +74,29 @@ const CreateTrivia = () => {
             >
               Correct
             </Checkbox>
-            <Button isIconOnly type="button" color="danger" variant="flat" onClick={() => handleRemoveOption(index)} className="ml-2">
+            <Button
+              isIconOnly
+              type="button"
+              color="danger"
+              variant="flat"
+              onClick={() => handleRemoveOption(index)}
+              className="ml-2"
+            >
               <Trash className="h-4 w-4" />
             </Button>
           </div>
         ))}
-        <Button type="button" color="primary" variant="flat" onClick={handleAddOption} className="mb-6">
-          <Plus className="w-4 h-4 mr-2" /> Add Answer
+        <Button
+          type="button"
+          color="primary"
+          variant="flat"
+          onClick={handleAddOption}
+          className="mb-6"
+        >
+          <Plus className="mr-2 h-4 w-4" /> Add Answer
         </Button>
         <Button type="submit" color="primary" variant="flat" className="w-full">
-        <Send className="w-4 h-4 mr-2" /> Post Trivia
+          <Send className="mr-2 h-4 w-4" /> Post Trivia
         </Button>
       </form>
     </div>

@@ -7,6 +7,8 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { User } from "@nextui-org/user";
 
+import { signUp } from "./actions";
+
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -22,66 +24,56 @@ export default function Login() {
             description={<div className="text-primary">@{username}</div>}
             className="truncate text-ellipsis pb-5"
           />
-          <div className="w-full flex-wrap gap-4 md:flex-nowrap">
+          <form action={signUp} className="space-y-8">
             <Input
               isRequired
-              type="username"
               label="Username"
-              description="This can not be changed later."
-              variant="underlined"
+              name="username"
               labelPlacement="outside"
-              className="pb-5"
-              value={username}
               onValueChange={setValue1}
+              variant="underlined"
             />
-          </div>
-          <div className="w-full flex-wrap gap-4 md:flex-nowrap">
             <Input
               isRequired
-              type="text"
               label="Display Name"
-              variant="underlined"
+              name="displayName"
               labelPlacement="outside"
-              className="pb-5"
-              value={displayName}
               onValueChange={setValue2}
+              variant="underlined"
             />
-          </div>
-          <div className="w-full flex-wrap gap-4 md:flex-nowrap">
             <Input
               isRequired
               type="email"
               label="Email"
-              variant="underlined"
+              name="email"
               labelPlacement="outside"
-              className="pb-5"
+              variant="underlined"
             />
-          </div>
-
-          <Input
-            isRequired
-            label="Password"
-            labelPlacement="outside"
-            variant="underlined"
-            endContent={
-              <button
-                className="focus:outline-none"
-                type="button"
-                onClick={toggleVisibility}
-              >
-                {isVisible ? (
-                  <EyeOff className="pointer-events-none text-2xl text-default-400" />
-                ) : (
-                  <Eye className="pointer-events-none text-2xl text-default-400" />
-                )}
-              </button>
-            }
-            type={isVisible ? "text" : "password"}
-            className="pb-5"
-          />
-          <Button color="primary" variant="flat">
-            Continue
-          </Button>
+            <Input
+              isRequired
+              type={isVisible ? "text" : "password"}
+              label="Password"
+              name="password"
+              labelPlacement="outside"
+              variant="underlined"
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? (
+                    <EyeOff className="pointer-events-none text-2xl text-default-400" />
+                  ) : (
+                    <Eye className="pointer-events-none text-2xl text-default-400" />
+                  )}
+                </button>
+              }
+            />
+            <Button type="submit" color="primary" variant="flat">
+              Continue
+            </Button>
+          </form>
         </CardBody>
       </Card>
     </main>
