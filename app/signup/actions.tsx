@@ -13,7 +13,7 @@ const signUpSchema = z.object({
 });
 
 export const signUp = async (formData: FormData) => {
-  let formObject = Object.fromEntries(formData);
+  const formObject = Object.fromEntries(formData);
   const data = signUpSchema.parse(formObject);
 
   const password = await Bun.password.hash(data.password);
