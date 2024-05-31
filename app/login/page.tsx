@@ -13,7 +13,7 @@ import { Eye, EyeOff } from "lucide-react";
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
   const [state, formAction] = useFormState(login, {
-    message: "hello",
+    message: "",
   });
   const toggleVisibility = () => setIsVisible(!isVisible);
   return (

@@ -1,16 +1,14 @@
-"use client";
+import { redirect } from "next/navigation";
+import Tabs from "./components/tabs";
+import { getUser } from "@/utils/database/auth";
 
-import { useState } from "react";
-import useWindowDimensions from "@/utils/useWindowDimensions";
-import { Tabs, Tab } from "@nextui-org/tabs";
-import ProfileSettings from "./components/ProfileSettings";
-import AccountSettings from "./components/AccountSettings";
-import AppearanceSettings from "./components/AppearanceSettings";
-import { User, Settings, SunMoon } from "lucide-react";
+const Profile = async () => {
+  const user = await getUser();
 
-export default function Profile() {
-  const [current, setCurrent] = useState("profile");
-  const { windowWidth } = useWindowDimensions();
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <main>
       <div className="flex flex-col gap-4 p-8">
@@ -20,58 +18,10 @@ export default function Profile() {
             Manage your account settings and set e-mail preferences.
           </p>
         </div>
-        <div className="flex flex-col gap-8 sm:flex-row">
-          <Tabs
-            key="settings"
-            color="primary"
-            size="lg"
-            radius="sm"
-            variant="light"
-            isVertical={windowWidth > 640}
-            defaultSelectedKey={"profile"}
-            onSelectionChange={(key) => {
-              setCurrent(key.toString());
-            }}
-            className="block min-w-48"
-          >
-            <Tab
-              key="profile"
-              title={
-                <div className="flex items-center">
-                  <User className="mr-2 h-4 w-4" />
-                  Profile
-                </div>
-              }
-              className="flex-col items-center sm:items-stretch"
-            />
-            <Tab
-              key="account"
-              title={
-                <div className="flex items-center">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Account
-                </div>
-              }
-              className="flex-col items-center sm:items-stretch"
-            />
-            <Tab
-              key="appearance"
-              title={
-                <div className="flex items-center">
-                  <SunMoon className="mr-2 h-4 w-4" />
-                  Appearance
-                </div>
-              }
-              className="flex-col items-center sm:items-stretch"
-            />
-          </Tabs>
-          <div className="w-full text-left text-3xl">
-            {current === "profile" && <ProfileSettings />}
-            {current === "account" && <AccountSettings />}
-            {current === "appearance" && <AppearanceSettings />}
-          </div>
-        </div>
+        <Tabs user={user} />
       </div>
     </main>
   );
-}
+};
+
+export default Profile;
