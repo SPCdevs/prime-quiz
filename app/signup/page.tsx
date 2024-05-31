@@ -3,17 +3,22 @@
 import { Card, CardBody } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { User } from "@nextui-org/user";
 
 import { signUp } from "./actions";
+import { useState } from "react";
+import { useFormState } from "react-dom";
 
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
   const [username, setValue1] = useState("username");
   const [displayName, setValue2] = useState("Display Name");
+
+  const [state, formAction] = useFormState(signUp, {
+    message: "",
+  });
+
   return (
     <main className="flex items-center justify-center">
       <Card className="w-[400px] flex-col p-8">
@@ -24,7 +29,7 @@ export default function Login() {
             description={<div className="text-primary">@{username}</div>}
             className="truncate text-ellipsis pb-5"
           />
-          <form action={signUp} className="space-y-8">
+          <form action={formAction} className="flex flex-col gap-4">
             <Input
               isRequired
               label="Username"
@@ -60,7 +65,7 @@ export default function Login() {
                 <button
                   className="focus:outline-none"
                   type="button"
-                  onClick={toggleVisibility}
+                  onClick={() => setIsVisible(!isVisible)}
                 >
                   {isVisible ? (
                     <EyeOff className="pointer-events-none text-2xl text-default-400" />
@@ -73,6 +78,7 @@ export default function Login() {
             <Button type="submit" color="primary" variant="flat">
               Continue
             </Button>
+            <p className="text-dangerous-500">{state.message}</p>
           </form>
         </CardBody>
       </Card>
