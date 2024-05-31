@@ -12,6 +12,7 @@ export const GET = async () => {
           displayName: true,
         },
       },
+      createdAt: true,
     },
     orderBy: {
       createdAt: "asc",

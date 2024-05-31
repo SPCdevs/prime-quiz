@@ -31,7 +31,7 @@ const NavigationBar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/browse">
             <GraduationCap className="mr-1 h-4 w-4" /> Browse
           </Link>
         </NavbarItem>
@@ -61,8 +61,8 @@ const NavigationBar = () => {
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link color="foreground" href="#">
-            <GraduationCap className="mr-1 h-4 w-4" /> About
+          <Link color="foreground" href="/">
+            <GraduationCap className="mr-1 h-4 w-4" /> Browse
           </Link>
         </NavbarMenuItem>
       </NavbarMenu>
