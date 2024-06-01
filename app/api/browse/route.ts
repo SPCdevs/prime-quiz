@@ -15,7 +15,7 @@ export const GET = async () => {
       createdAt: true,
     },
     orderBy: {
-      createdAt: "asc",
+      createdAt: "desc",
     },
     take: 10,
   });
