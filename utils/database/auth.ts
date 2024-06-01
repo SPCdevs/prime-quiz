@@ -11,7 +11,7 @@ export const lucia = new Lucia(adapter, {
     expires: false,
     attributes: {
       // set to `true` when using HTTPS
-      secure: process.env.NODE_ENV === "production",
+      secure: false,
     },
   },
   getUserAttributes: (attributes) => {
@@ -20,7 +20,7 @@ export const lucia = new Lucia(adapter, {
       displayName: attributes.displayName,
       email: attributes.email,
       points: attributes.points,
-      history: attributes.history
+      history: attributes.history,
     };
   },
 });

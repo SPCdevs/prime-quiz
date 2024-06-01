@@ -1,3 +1,4 @@
+"use server";
 import { getUser } from "@/utils/database/auth";
 import { redirect } from "next/navigation";
 import CreateForm from "./form";

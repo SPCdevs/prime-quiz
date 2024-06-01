@@ -5,20 +5,20 @@ import { useState } from "react";
 import { Post } from "@/utils/types/post";
 import { Link } from "@nextui-org/link";
 
-const Question = (post: Post) => {
+const Question = (post: Post, key: number) => {
   const [_selectedAnswer, setSelectedAnswer] = useState("");
 
   const userLink = `/user/${post.user.username}`;
   const createdAt = new Date(post.createdAt);
 
   return (
-    <Card className="min-h-96">
+    <Card className="min-h-96" key={key}>
       <CardBody className="space-y-2 p-8">
         <p>
-          By{" "}
+          By
           <Link underline="hover" href={userLink}>
             {post.user.displayName}
-          </Link>{" "}
+          </Link>
           | On {createdAt.toLocaleDateString()}
         </p>
         <h3 className="text-3xl font-bold ">{post.title}</h3>

@@ -1,17 +1,25 @@
+"use client";
 import { Post } from "@/utils/types/post";
+import { useEffect, useState } from "react";
 import Question from "./question";
 
-const TriviaCardPage = async () => {
-  const posts: Post[] = await (
-    await fetch("http://localhost:3000/api/browse", {
+const TriviaCardPage = () => {
+  const [questions, setQuestions] = useState<Post[]>([]);
+
+  useEffect(() => {
+    fetch("/api/browse", {
       method: "GET",
-    })
-  ).json();
+    }).then((response) => {
+      response.json().then((data: Post[]) => {
+        setQuestions(data);
+      });
+    });
+  }, []);
 
   return (
     <div className="mx-auto max-w-lg space-y-8 p-8">
-      {posts.map((post, index) => (
-        <Question {...post} key={index} />
+      {questions.map((question: Post, key) => (
+        <Question {...question} key={key} />
       ))}
     </div>
   );

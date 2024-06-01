@@ -63,6 +63,6 @@ export const POST = async (request: Request) => {
     },
   });
 
-  revalidatePath('/browse')
-  return redirect('/browse')
+  revalidatePath("/browse");
+  return redirect("/browse");
 };
