@@ -48,7 +48,7 @@ const NavigationBar = ({ user }: { user: User | null }) => {
             }}
             name={user.displayName}
             as={Link}
-            href="/settings"
+            href="/manage"
           />
         ) : (
           <>

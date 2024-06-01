@@ -1,12 +1,19 @@
 FROM oven/bun:latest as base
 
 # build the app
-WORKDIR /usr/src/app
-COPY . .
+WORKDIR /app
+COPY package.json bun.lockb ./
 RUN bun i
-RUN bun run build --no-lint
+COPY . .
 
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
+
+RUN bunx prisma generate
+RUN bun --bun run build
+
+RUN chmod +x ./run.sh
 # run the app
 USER bun
-EXPOSE 3020/tcp
-ENTRYPOINT [ "bun", "--bun" ,"run", "start" ]
+EXPOSE 3000
+ENTRYPOINT ["./run.sh"]

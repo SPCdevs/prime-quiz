@@ -1,5 +1,6 @@
 import { getUser } from "@/utils/database/auth";
 import { prisma } from "@/utils/database/prisma";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -58,14 +59,10 @@ export const POST = async (request: Request) => {
     data: {
       userId: user.id,
       title: post.data.title,
-      answers: post.data.title,
+      answers: post.data.options,
     },
   });
 
-  return NextResponse.json(
-    {},
-    {
-      status: 200,
-    },
-  );
+  revalidatePath('/browse')
+  return redirect('/browse')
 };
