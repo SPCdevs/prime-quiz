@@ -1,4 +1,5 @@
 export interface Post {
+  id: string;
   title: string;
   answers: {
     answer: string;
@@ -9,4 +10,8 @@ export interface Post {
     displayName: string;
   };
   createdAt: string;
+  history: {
+    answer: string;
+    correct: boolean;
+  }[];
 }

@@ -1,37 +1,51 @@
-import { getUser } from "@/utils/database/auth";
+import { validateRequest } from "@/utils/database/auth";
 import { prisma } from "@/utils/database/prisma";
+import { Post } from "@/utils/types/post";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export const POST = async (request: Request) => {
-  const user = await getUser();
+  const { user } = await validateRequest();
   if (!user) {
     redirect("/login");
   }
 
   const body = await request.json();
-  if (!body.post || !body.answer) return NextResponse.json({ status: 500 });
+  if (!body.id || !body.answer) return NextResponse.json({ status: 500 });
 
   const post = await prisma.post.findUnique({
     where: {
-      id: body.post,
+      id: body.id,
     },
   });
-  if (!post) return NextResponse.json({ status: 400 });
 
-  if (!post.answers) return NextResponse.json({ status: 500 });
-  const answers = JSON.parse(post.answers.toString());
+  if (!post) return NextResponse.json({}, { status: 400 });
+  if (!post.answers) return NextResponse.json({}, { status: 500 });
 
-  for (const answer in answers) {
-    if (answers[answer].correct) {
-      if (answers.indexOf(answer) === body.answer) {
-        return NextResponse.json({ status: 200, correct: true });
-      }
+  const answers = post.answers as Post["answers"];
+
+  let correct = false;
+  for (const answer of answers) {
+    if (answer.answer === body.answer && answer.correct) {
+      correct = true;
     }
   }
 
-  return NextResponse.json({
-    status: 200,
-    correct: false,
+  await prisma.history.upsert({
+    where: {
+      userId_questionId: {
+        userId: user.id,
+        questionId: post.id,
+      },
+    },
+    create: {
+      userId: user.id,
+      questionId: post.id,
+      answer: body.answer,
+      correct: correct,
+    },
+    update: {},
   });
+
+  return NextResponse.json({ correct: correct }, { status: 200 });
 };

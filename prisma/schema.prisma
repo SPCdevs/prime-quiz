@@ -17,7 +17,7 @@ model User {
   sessions     Session[]
   followedTags Tag[]     @relation("TagToUser")
   points       Int       @default(0)
-  history      String[]  @default([])
+  history      History[]
 }
 
 model Session {
@@ -28,14 +28,29 @@ model Session {
 }
 
 model Post {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   title     String
   userId    String
   answers   Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tags      Tag[]    @relation("PostToTag")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags      Tag[]     @relation("PostToTag")
+  history   History[]
+}
+
+model History {
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  questionId String
+  question   Post   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  answer String
+  correct Boolean
+
+  @@id([userId, questionId])
+  @@unique([userId, questionId])
 }
 
 model Tag {

@@ -1,15 +1,43 @@
 "use client";
 import { Card, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { useState } from "react";
-import { Post } from "@/utils/types/post";
 import { Link } from "@nextui-org/link";
+import { useState, useEffect } from "react";
+import { Post } from "@/utils/types/post";
 
 const Question = (post: Post, key: number) => {
-  const [_selectedAnswer, setSelectedAnswer] = useState("");
-
+  const [selectedAnswer, setSelectedAnswer] = useState<{
+    answer: string;
+    correct: boolean | null;
+  }>({
+    answer: "",
+    correct: null,
+  });
   const userLink = `/user/${post.user.username}`;
   const createdAt = new Date(post.createdAt);
+
+  useEffect(() => {
+    if (post.history.length > 0) {
+      setSelectedAnswer(post.history[0]);
+    }
+  }, [post.history]);
+
+  const selectAnswer = (ans: string) => {
+    fetch("/api/answer", {
+      body: JSON.stringify({
+        id: post.id,
+        answer: ans,
+      }),
+      method: "post",
+    }).then((res) => {
+      res.json().then((data) => {
+        setSelectedAnswer({
+          answer: ans,
+          correct: data.correct,
+        });
+      });
+    });
+  };
 
   return (
     <Card className="min-h-96" key={key}>
@@ -26,7 +54,17 @@ const Question = (post: Post, key: number) => {
             <Button
               key={index}
               variant="flat"
-              onClick={() => setSelectedAnswer(answer.answer)}
+              color={
+                selectedAnswer.answer == answer.answer
+                  ? selectedAnswer.correct
+                    ? "success"
+                    : selectedAnswer.correct === false
+                      ? "danger"
+                      : "default"
+                  : "default"
+              }
+              disabled={!(selectedAnswer.correct === null)}
+              onClick={() => selectAnswer(answer.answer)}
             >
               {answer.answer}
             </Button>
