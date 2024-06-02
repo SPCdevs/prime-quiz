@@ -1,5 +1,5 @@
 "use server";
-import { getUser, lucia } from "@/utils/database/auth";
+import { getUser, lucia, validateRequest } from "@/utils/database/auth";
 import { prisma } from "@/utils/database/prisma";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -37,17 +37,12 @@ export const changeProfile = async (formData: FormData) => {
 };
 
 export const logoutAccount = async () => {
-  const user = getUser();
-  if (!user) {
-    redirect("/login");
-  }
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
-
-  if (!sessionId) {
+  const { session } = await validateRequest();
+  if (!session) {
     redirect("/login");
   }
 
-  await lucia.invalidateSession(sessionId);
+  await lucia.invalidateSession(session.id);
   const sessionCookie = lucia.createBlankSessionCookie();
   cookies().set(
     sessionCookie.name,
@@ -56,5 +51,31 @@ export const logoutAccount = async () => {
   );
 
   revalidatePath("/");
-  return redirect("/login");
+  redirect("/login");
+};
+
+export const deleteAccount = async () => {
+  const { session, user } = await validateRequest();
+  if (!session) {
+    return {
+      error: "Unauthorized",
+    };
+  }
+
+  await lucia.invalidateUserSessions(session.id);
+  const sessionCookie = lucia.createBlankSessionCookie();
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes,
+  );
+
+  await prisma.user.delete({
+    where: {
+      id: user.id,
+    },
+  });
+
+  revalidatePath("/");
+  return redirect("/");
 };

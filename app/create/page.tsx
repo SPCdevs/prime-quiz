@@ -11,7 +11,7 @@ const Page = async () => {
 
   return (
     <div className="mx-auto max-w-screen-md p-8">
-      <h1 className="pb-8 text-center text-3xl font-bold">Create a trivia</h1>
+      <h1 className="pb-8 text-center text-3xl font-bold">Create a Trivia</h1>
       <CreateForm />
     </div>
   );

@@ -15,9 +15,8 @@ const Question = (post: Post, key: number) => {
     <Card className="min-h-96" key={key}>
       <CardBody className="space-y-2 p-8">
         <p>
-          By
           <Link underline="hover" href={userLink}>
-            {post.user.displayName}
+            @{post.user.displayName}
           </Link>
           | On {createdAt.toLocaleDateString()}
         </p>

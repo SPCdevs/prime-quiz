@@ -53,7 +53,7 @@ export default function Login() {
             <Button color="primary" type="submit" variant="flat">
               Continue
             </Button>
-            <p className="text-danger-500">{state.message}</p>
+            <p className="text-danger-500">{state?.message}</p>
           </CardBody>
         </Card>
       </form>
