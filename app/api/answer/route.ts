@@ -47,5 +47,29 @@ export const POST = async (request: Request) => {
     update: {},
   });
 
+  await prisma.user.update({
+    where: {
+      id: post.userId,
+    },
+    data: {
+      points: {
+        increment: 1,
+      },
+    },
+  });
+
+  if (correct) {
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        points: {
+          increment: 1,
+        },
+      },
+    });
+  }
+
   return NextResponse.json({ correct: correct }, { status: 200 });
 };
