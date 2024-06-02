@@ -1,38 +1,26 @@
 "use client";
-
-import React, { useState } from 'react';
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
-import { Button } from '@nextui-org/button';
+import { Post } from "@/utils/types/post";
+import { useEffect, useState } from "react";
+import Question from "./question";
 
 const TriviaCardPage = () => {
-  // Placeholder data
-  const question = "What is the capital of France?";
-  const answers = ["Paris", "Berlin", "London", "Madrid"];
-  const [selectedAnswer, setSelectedAnswer] = useState('');
+  const [questions, setQuestions] = useState<Post[]>([]);
 
-  const handleAnswerSelection = (answer:string) => {
-    setSelectedAnswer(answer);
-  };
+  useEffect(() => {
+    fetch("/api/browse", {
+      method: "GET",
+    }).then((response) => {
+      response.json().then((data: Post[]) => {
+        setQuestions(data);
+      });
+    });
+  }, []);
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <Card>
-        <CardBody>
-            <h3 className="pb-5">{question}</h3>
-            {answers.map((answer, index) => (
-          <Button
-            variant="flat"
-            key={index}
-            onClick={() => handleAnswerSelection(answer)}
-            className="mb-2"
-          >
-            {answer}
-          </Button>
-        ))}
-        </CardBody>
-        
-        
-      </Card>
+    <div className="mx-auto max-w-lg space-y-8 p-8">
+      {questions.map((question: Post, key) => (
+        <Question {...question} key={key} />
+      ))}
     </div>
   );
 };
