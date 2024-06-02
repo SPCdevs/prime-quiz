@@ -1,10 +1,11 @@
 "use server";
 import { prisma } from "@/utils/database/prisma";
-import { cookies } from "next/headers";
 import { lucia } from "@/utils/database/auth";
-import { z } from "zod";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { verify } from "@node-rs/argon2";
+import { z } from "zod";
 
 const signUpSchema = z.object({
   email: z.string().email(),
@@ -27,7 +28,18 @@ export const login = async (_prevState: unknown, formData: FormData) => {
     };
   }
 
-  const validPassword = Bun.password.verifySync(data.password, user.password);
+  const validPassword = await verify(user.password, data.password, {
+    memoryCost: 19456,
+    timeCost: 2,
+    outputLen: 32,
+    parallelism: 1,
+  });
+
+  if (!validPassword) {
+    return {
+      message: "Incorrect username or password",
+    };
+  }
 
   if (!validPassword) {
     return {

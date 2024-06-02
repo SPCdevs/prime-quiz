@@ -1,8 +1,9 @@
 "use server";
 import { prisma } from "@/utils/database/prisma";
-import { cookies } from "next/headers";
 import { lucia } from "@/utils/database/auth";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { hash } from "@node-rs/argon2";
 import { z } from "zod";
 
 const signUpSchema = z.object({
@@ -16,8 +17,6 @@ export const signUp = async (_prevState: unknown, formData: FormData) => {
   const formObject = Object.fromEntries(formData);
   const data = signUpSchema.parse(formObject);
 
-  const password = await Bun.password.hash(data.password);
-
   const existingUsers = await prisma.user.findMany({
     where: {
       OR: [{ username: data.username }, { email: data.email }],
@@ -29,6 +28,13 @@ export const signUp = async (_prevState: unknown, formData: FormData) => {
       message: "A user with the same username or email already exists.",
     };
   }
+
+  const password = await hash(data.password, {
+    memoryCost: 19456,
+    timeCost: 2,
+    outputLen: 32,
+    parallelism: 1,
+  });
 
   const user = await prisma.user.create({
     data: {
