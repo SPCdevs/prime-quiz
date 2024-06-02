@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
@@ -9,6 +10,8 @@ const CreateForm = () => {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", ""]);
   const [correctAnswer, setCorrectAnswer] = useState<null | string>(null);
+
+  const router = useRouter();
 
   const handleOptionChange = (index: number, value: string) => {
     const newOptions = [...options];
@@ -35,6 +38,12 @@ const CreateForm = () => {
     fetch("/api/create", {
       method: "post",
       body: JSON.stringify(triviaData),
+    }).then((res) => {
+      res.json().then((data) => {
+        if (data.message == "success") {
+          router.push("/browse");
+        }
+      });
     });
   };
 
