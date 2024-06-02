@@ -8,16 +8,15 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(uuid())
-  username     String    @unique
-  displayName  String
-  email        String    @unique
-  password     String
-  posts        Post[]
-  sessions     Session[]
-  followedTags Tag[]     @relation("TagToUser")
-  points       Int       @default(0)
-  history      History[]
+  id          String    @id @default(uuid())
+  username    String    @unique
+  displayName String
+  email       String    @unique
+  password    String
+  posts       Post[]
+  sessions    Session[]
+  points      Int       @default(0)
+  history     History[]
 }
 
 model Session {
@@ -35,7 +34,7 @@ model Post {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tags      Tag[]     @relation("PostToTag")
+  tags      Tag[]
   history   History[]
 }
 
@@ -46,7 +45,7 @@ model History {
   questionId String
   question   Post   @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
-  answer String
+  answer  String
   correct Boolean
 
   @@id([userId, questionId])
@@ -54,8 +53,8 @@ model History {
 }
 
 model Tag {
-  id    String @id @default(uuid())
-  name  String @unique
-  posts Post[] @relation("PostToTag")
-  users User[] @relation("TagToUser")
+  id   String @id @default(uuid())
+  name String @unique
+
+  posts Post[]
 }
