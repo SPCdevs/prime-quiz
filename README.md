@@ -28,3 +28,11 @@ The docker compose script contains all the components required for running the a
 The `docker-compose` script also contains pg admin for the purpose of monitoring the database. However it is not required for the function of the app so it can be easily be disabled by commenting it out.
 
 There is a `run.sh` script in the project that is used by the `Dockerfile` (as the entrypoint). DO NOT run the `run.sh` on your local computer as it is only designed to be used within the docker image itself.
+
+## Features
+
+- Create trivia and share it with others!
+- Browse trivia by creator assigned tags!
+- Compete and brag about `points` earned with your friends!
+- Set a bio and tell more about yourself
+- Review and learn mistakes through the history tab.
