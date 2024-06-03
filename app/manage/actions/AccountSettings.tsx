@@ -1,8 +1,28 @@
 "use client";
+import { useEffect } from "react";
 import { logoutAccount, deleteAccount } from "../actions";
 import { Button } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
+import { useFormState } from "react-dom";
 
 export default function AccountSettings() {
+  const router = useRouter();
+  const [logoutAccountState, logoutAccountForm] = useFormState(logoutAccount, {
+    message: "",
+  });
+  const [deleteAccountState, deleteAccountForm] = useFormState(deleteAccount, {
+    message: "",
+  });
+
+  useEffect(() => {
+    if (
+      logoutAccountState.message == "success" ||
+      deleteAccountState.message == "success"
+    ) {
+      router.replace("/");
+    }
+  }, [logoutAccountState, deleteAccountState, router]);
+
   return (
     <div className="space-y-6">
       <div>
@@ -13,12 +33,12 @@ export default function AccountSettings() {
       </div>
 
       <div className="flex gap-3">
-        <form action={logoutAccount}>
+        <form action={logoutAccountForm}>
           <Button type="submit" color="danger">
             Log out
           </Button>
         </form>
-        <form action={deleteAccount}>
+        <form action={deleteAccountForm}>
           <Button type="submit" color="danger" variant="flat">
             Delete Account
           </Button>

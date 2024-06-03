@@ -7,10 +7,12 @@ import { Eye, EyeOff } from "lucide-react";
 import { User } from "@nextui-org/user";
 
 import { signUp } from "./actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [username, setValue1] = useState("username");
   const [displayName, setValue2] = useState("Display Name");
@@ -18,6 +20,12 @@ export default function Login() {
   const [state, formAction] = useFormState(signUp, {
     message: "",
   });
+
+  useEffect(() => {
+    if (state.message == "success") {
+      router.push("/");
+    }
+  }, [state.message, router]);
 
   return (
     <main className="flex items-center justify-center">
@@ -78,7 +86,9 @@ export default function Login() {
             <Button type="submit" color="primary" variant="flat">
               Continue
             </Button>
-            <p className="text-dangerous-500">{state.message}</p>
+            <p className="text-danger-500">
+              {state?.message == "success" ? "" : state?.message}
+            </p>
           </form>
         </CardBody>
       </Card>

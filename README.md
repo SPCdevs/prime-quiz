@@ -17,7 +17,7 @@ PrimeQuiz is a social media app that allows creators to post trivia questions al
 
 To self host PrimeQuiz run the docker-compose file with `--build` flag. Example usage:
 
-```
+```bash
 cd /path/to/dir
 docker-compose up --build
 ```

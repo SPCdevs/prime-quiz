@@ -41,7 +41,7 @@ export const changeProfile = async (formData: FormData) => {
 export const logoutAccount = async () => {
   const { session } = await validateRequest();
   if (!session) {
-    redirect("/login");
+    return { message: "unauthorized" };
   }
 
   await lucia.invalidateSession(session.id);
@@ -53,14 +53,16 @@ export const logoutAccount = async () => {
   );
 
   revalidatePath("/");
-  redirect("/login");
+  return {
+    message: "success",
+  };
 };
 
 export const deleteAccount = async () => {
   const { session, user } = await validateRequest();
   if (!session) {
     return {
-      error: "Unauthorized",
+      message: "unauthorized",
     };
   }
 
@@ -79,5 +81,7 @@ export const deleteAccount = async () => {
   });
 
   revalidatePath("/");
-  return redirect("/");
+  return {
+    message: "success",
+  };
 };

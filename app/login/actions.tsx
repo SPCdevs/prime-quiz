@@ -2,7 +2,6 @@
 import { prisma } from "@/utils/database/prisma";
 import { lucia } from "@/utils/database/auth";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { verify } from "@node-rs/argon2";
 import { z } from "zod";
@@ -14,7 +13,15 @@ const signUpSchema = z.object({
 
 export const login = async (_prevState: unknown, formData: FormData) => {
   const formObject = Object.fromEntries(formData);
-  const data = signUpSchema.parse(formObject);
+  let data = {
+    email: "",
+    password: "",
+  };
+  try {
+    data = signUpSchema.parse(formObject);
+  } catch {
+    return { message: "Incorrect email or password" };
+  }
 
   const user = await prisma.user.findUnique({
     where: {
@@ -37,12 +44,6 @@ export const login = async (_prevState: unknown, formData: FormData) => {
 
   if (!validPassword) {
     return {
-      message: "Incorrect username or password",
-    };
-  }
-
-  if (!validPassword) {
-    return {
       message: "Incorrect email or password",
     };
   }
@@ -56,5 +57,5 @@ export const login = async (_prevState: unknown, formData: FormData) => {
   );
 
   revalidatePath("/");
-  redirect("/");
+  return { message: "success" };
 };

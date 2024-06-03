@@ -6,13 +6,11 @@ COPY package.json bun.lockb ./
 RUN bun i
 COPY . .
 
-ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
-
 RUN bunx prisma generate
-RUN bun --bun run build
+RUN bun run build --no-lint
 
 RUN chmod +x ./run.sh
+RUN chown -R bun:bun /app
 # run the app
 USER bun
 EXPOSE 3000

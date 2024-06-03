@@ -24,8 +24,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        DATABASE_URL: postgresql://postgres:postgres@db:5432/primequiz
     ports:
       - "3000:3000"
     environment:

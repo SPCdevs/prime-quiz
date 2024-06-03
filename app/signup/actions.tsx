@@ -2,7 +2,6 @@
 import { prisma } from "@/utils/database/prisma";
 import { lucia } from "@/utils/database/auth";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { hash } from "@node-rs/argon2";
 import { z } from "zod";
 
@@ -52,5 +51,8 @@ export const signUp = async (_prevState: unknown, formData: FormData) => {
     sessionCookie.value,
     sessionCookie.attributes,
   );
-  return redirect("/");
+
+  return {
+    message: "success",
+  };
 };
