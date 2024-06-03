@@ -6,7 +6,7 @@ import Question from "./question";
 const TriviaCardPage = () => {
   const [questions, setQuestions] = useState<Post[]>([]);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [_currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   useEffect(() => {
     fetch("/api/browse", {
@@ -31,7 +31,8 @@ const TriviaCardPage = () => {
   return (
     <div className="mx-auto max-w-lg space-y-8 p-8">
       {questions.map((question: Post, key) => (
-        <div ref={(el:any) => (cardRefs.current[key] = el)} key={key}>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any 
+        <div ref={(el: any) => (cardRefs.current[key] = el)} key={key}>
           <Question
             {...question}
             onAnswerSelected={() => handleNextQuestion(key)}

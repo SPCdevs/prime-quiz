@@ -47,14 +47,14 @@ export default function History() {
           Take a look at trivia questions you have done.
         </p>
       </div>
-      <div className="flex flex-wrap gap-4 my-8">
+      <div className="my-8 flex flex-wrap gap-4">
         {history.length === 0 ? (
           <p className="text-center text-gray-500">
             You haven't done any trivia questions yet. Go and try some!
           </p>
         ) : (
           history.map((post, key) => (
-            <Card key={key} className="p-4 min-w-96 max-w-96 flex-1">
+            <Card key={key} className="min-w-96 max-w-96 flex-1 p-4">
               <h4>{post.question.title}</h4>
               {post.question.answers.map((ans) => (
                 <Button
@@ -67,15 +67,16 @@ export default function History() {
                         ? "success"
                         : "danger"
                       : ans.correct && !post.correct
-                      ? "primary"
-                      : "default"
+                        ? "primary"
+                        : "default"
                   }
                 >
                   {ans.answer}
                 </Button>
               ))}
               <h3>
-                Your Answer: <strong>{post.answer}</strong> ({post.correct ? "Correct" : "Incorrect"})
+                Your Answer: <strong>{post.answer}</strong> (
+                {post.correct ? "Correct" : "Incorrect"})
               </h3>
             </Card>
           ))

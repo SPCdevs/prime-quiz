@@ -68,8 +68,8 @@ const Question = (post: QuestionProps) => {
                   ? selectedAnswer.correct
                     ? "success"
                     : selectedAnswer.correct === false
-                    ? "danger"
-                    : "default"
+                      ? "danger"
+                      : "default"
                   : "default"
               }
               disabled={!(selectedAnswer.correct === null)}

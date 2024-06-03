@@ -16,10 +16,10 @@ export const GET = async () => {
     },
     include: {
       question: true,
-    }
+    },
   });
 
   return NextResponse.json(histories, {
-    status: 200
+    status: 200,
   });
-}
+};
