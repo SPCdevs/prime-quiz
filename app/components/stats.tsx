@@ -1,10 +1,24 @@
 "use client";
 
 import { User } from "lucia";
-import { CircularProgress, Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody } from "@nextui-org/react";
 import { Trophy, Info } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function StatsPage({ user }: { user: User }) {
+  const [stats, setStats] = useState({
+    historyCount: 0,
+    postCount: 0,
+  });
+
+  useEffect(() => {
+    fetch(`/api/user/${user.username}/stats`).then((res) => {
+      res.json().then((data) => {
+        setStats(data);
+      });
+    });
+  }, [user.username]);
+
   return (
     <div className="flex flex-col items-center justify-center p-8 text-center">
       <h1 className="mb-4 text-5xl font-bold">
@@ -20,9 +34,9 @@ export default function StatsPage({ user }: { user: User }) {
         <CardBody className="flex flex-row items-center">
           <Info className="h-5 w-5 text-slate-500" />
           <span className="pl-5">
-            Earn points when you complete questions and get them right,
+            Earn a point when you complete a trivia and get it right,
             <br />
-            or when someone does your trivia questions.
+            or when someone does one of your trivia questions.
           </span>
         </CardBody>
       </Card>
@@ -30,15 +44,19 @@ export default function StatsPage({ user }: { user: User }) {
         <Card className="flex-1 p-2">
           <CardBody className="flex flex-col justify-between text-center">
             <h2 className="text-xl font-bold">
-              Questions <br /> Created
+              Trivia <br /> Created
             </h2>
-            <div className="mt-2 text-6xl font-bold text-primary">XX</div>
+            <div className="mt-2 text-6xl font-bold text-primary">
+              {stats.postCount}
+            </div>
           </CardBody>
         </Card>
         <Card className="flex-1 p-2">
           <CardBody className="flex flex-col justify-between text-center">
-            <h2 className="text-xl font-bold">Questions Answered</h2>
-            <div className="mt-2 text-6xl font-bold text-primary">XX</div>
+            <h2 className="text-xl font-bold">Trivia Answered</h2>
+            <div className="mt-2 text-6xl font-bold text-primary">
+              {stats.historyCount}
+            </div>
           </CardBody>
         </Card>
       </div>

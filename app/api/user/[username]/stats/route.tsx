@@ -5,22 +5,30 @@ export const GET = async (
   _request: NextRequest,
   { params }: { params: { username: string } },
 ) => {
-  const historyCount = await prisma.history.count({
-    where: {
-      username: params.username,
-    }
-  });
-
-  if (!user) {
-    return NextResponse.json(
-      {},
-      {
-        status: 404,
+  const stats = await prisma.$transaction([
+    prisma.history.count({
+      where: {
+        user: {
+          username: params.username,
+        },
       },
-    );
-  }
+    }),
+    prisma.post.count({
+      where: {
+        user: {
+          username: params.username,
+        },
+      },
+    }),
+  ]);
 
-  return NextResponse.json(user, {
-    status: 200,
-  });
+  return NextResponse.json(
+    {
+      historyCount: stats[0],
+      postCount: stats[1],
+    },
+    {
+      status: 200,
+    },
+  );
 };
