@@ -1,10 +1,11 @@
 const tags = [
-  "History",
   "Technology",
-  "Science",
-  "Fun",
-  "Mathematics",
   "Puzzle",
+  "Fun",
+  "History",
+  "Geography",
+  "Science",
+  "Mathematics",
   "Aesthetic",
 ];
 export default tags;

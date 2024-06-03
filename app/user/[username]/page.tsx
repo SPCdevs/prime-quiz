@@ -4,6 +4,7 @@ import TriviaCard from "./TriviaCard";
 import { useEffect, useState } from "react";
 import { User } from "lucia";
 import { Post } from "@/utils/types/post";
+import { Trophy } from "lucide-react";
 
 interface UserWithPosts extends User {
   posts: Post[];
@@ -43,6 +44,10 @@ const UserProfile = ({ params }: { params: { username: string } }) => {
             />
             <h2>{user.displayName}</h2>
             <p className="text-primary">@{user.username}</p>
+            <p className="flex">
+              {user.points}
+              <Trophy className="ml-2 h-4 w-4" />
+            </p>
 
             <p className="my-8 text-default-500">{user.bio}</p>
           </div>
