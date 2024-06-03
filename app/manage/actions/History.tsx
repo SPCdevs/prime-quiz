@@ -35,7 +35,6 @@ export default function History() {
       .then((response) => response.json())
       .then((data: HistoryItem[]) => {
         setHistory(data);
-        console.log(data);
       });
   }, []);
 

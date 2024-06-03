@@ -3,8 +3,9 @@ import { Tabs, Tab } from "@nextui-org/tabs";
 import ProfileSettings from "./ProfileSettings";
 import AccountSettings from "./AccountSettings";
 import AppearanceSettings from "./AppearanceSettings";
-import History from "./history";
-import { UserIcon, Settings, SunMoon, HistoryIcon } from "lucide-react";
+import Edit from "./Edit";
+import History from "./History";
+import { UserIcon, Settings, SunMoon, HistoryIcon, Pencil } from "lucide-react";
 import { User } from "lucia";
 
 const TabsMenu = ({ user }: { user: User }) => {
@@ -15,13 +16,24 @@ const TabsMenu = ({ user }: { user: User }) => {
       size="lg"
       variant="light"
       isVertical={true}
-      defaultSelectedKey="profile"
+      defaultSelectedKey="manage"
       classNames={{
         tabList: "flex-row sm:flex-col min-w-48 pb-4",
         wrapper: "flex-col sm:flex-row",
         panel: "w-full",
       }}
     >
+      <Tab
+        key="manage"
+        title={
+          <div className="flex items-center">
+            <Pencil className="mr-2 h-4 w-4" />
+            Manage
+          </div>
+        }
+      >
+        <Edit />
+      </Tab>
       <Tab
         key="profile"
         title={
