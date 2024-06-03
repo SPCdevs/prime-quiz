@@ -40,7 +40,7 @@ export const GET = async (request: NextRequest) => {
       createdAt: true,
       history: {
         where: {
-          userId: user?.id,
+          userId: user ? user?.id : "",
         },
         select: {
           answer: true,
