@@ -11,7 +11,7 @@ import { Avatar } from "@nextui-org/avatar";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-import { Home, Plus, GraduationCap } from "lucide-react";
+import { Home, Plus, GraduationCap, Trophy } from "lucide-react";
 import { User } from "lucia";
 
 const NavigationBar = ({ user }: { user: User | null }) => {
@@ -42,16 +42,21 @@ const NavigationBar = ({ user }: { user: User | null }) => {
       </NavbarContent>
       <NavbarContent justify="end">
         {user ? (
-          <Avatar
-            classNames={{
-              base: "bg-primary-500",
-              icon: "text-primary-500",
-              name: "text-primary-50 font-bold",
-            }}
-            name={user.displayName}
-            as={Link}
-            href="/manage"
-          />
+          <>
+            <p className="flex items-center">
+              {user.points} <Trophy className="ml-2 h-4 w-4 text-primary" />
+            </p>
+            <Avatar
+              classNames={{
+                base: "bg-primary-500",
+                icon: "text-primary-500",
+                name: "text-primary-50 font-bold",
+              }}
+              name={user.displayName}
+              as={Link}
+              href="/manage"
+            />
+          </>
         ) : (
           <>
             <NavbarItem className="hidden lg:flex">

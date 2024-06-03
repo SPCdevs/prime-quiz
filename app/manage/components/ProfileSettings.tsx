@@ -39,6 +39,7 @@ export default function ProfileSettings({ user }: { user: User }) {
           label="Bio"
           variant="bordered"
           placeholder="Tell bit about your self."
+          value={user.bio}
         />
         <Button type="submit" color="primary" variant="flat">
           Save

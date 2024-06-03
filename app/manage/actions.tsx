@@ -8,6 +8,7 @@ import { z } from "zod";
 
 const changeProfileSchema = z.object({
   displayName: z.string().min(1).max(40),
+  bio: z.string().max(2000),
 });
 
 export const changeProfile = async (formData: FormData) => {
@@ -28,6 +29,7 @@ export const changeProfile = async (formData: FormData) => {
       },
       data: {
         displayName: data.displayName,
+        bio: data.bio,
       },
     });
   }

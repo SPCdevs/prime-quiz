@@ -10,12 +10,13 @@ datasource db {
 model User {
   id          String    @id @default(uuid())
   username    String    @unique
-  displayName String
   email       String    @unique
+  displayName String
+  bio         String?
   password    String
+  points      Int       @default(0)
   posts       Post[]
   sessions    Session[]
-  points      Int       @default(0)
   history     History[]
 }
 

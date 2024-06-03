@@ -7,7 +7,7 @@ import { User } from "lucia";
 
 export const metadata: Metadata = {
   title: "PrimeQuiz",
-  description: "get addicted to learning.",
+  description: "Get addicted to learning.",
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
