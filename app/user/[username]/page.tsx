@@ -44,9 +44,9 @@ const UserProfile = ({ params }: { params: { username: string } }) => {
             />
             <h2>{user.displayName}</h2>
             <p className="text-primary">@{user.username}</p>
-            <p className="flex">
+            <p className="flex items-center">
               {user.points}
-              <Trophy className="ml-2 h-4 w-4" />
+              <Trophy className="ml-2 h-4 w-4 text-primary" />
             </p>
 
             <p className="my-8 text-default-500">{user.bio}</p>

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import Tabs from "./components/tabs";
+import Tabs from "./actions/tabs";
 import { getUser } from "@/utils/database/auth";
 
 const Profile = async () => {

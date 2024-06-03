@@ -1,13 +1,19 @@
 import { validateRequest } from "@/utils/database/auth";
 import { prisma } from "@/utils/database/prisma";
 import { Post } from "@/utils/types/post";
-import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export const POST = async (request: Request) => {
   const { user } = await validateRequest();
   if (!user) {
-    redirect("/login");
+    return NextResponse.json(
+      {
+        message: "not logged in",
+      },
+      {
+        status: 400,
+      },
+    );
   }
 
   const body = await request.json();

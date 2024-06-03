@@ -4,12 +4,14 @@ import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { useState, useEffect } from "react";
 import { Post } from "@/utils/types/post";
+import { useRouter } from "next/navigation";
 
 interface QuestionProps extends Post {
   onAnswerSelected: () => void;
 }
 
 const Question = (post: QuestionProps) => {
+  const router = useRouter();
   const [selectedAnswer, setSelectedAnswer] = useState<{
     answer: string;
     correct: boolean | null;
@@ -37,6 +39,9 @@ const Question = (post: QuestionProps) => {
       method: "post",
     }).then((res) => {
       res.json().then((data) => {
+        if (data?.message == "not logged in") {
+          router.push("/login");
+        }
         setSelectedAnswer({
           answer: ans,
           correct: data.correct,

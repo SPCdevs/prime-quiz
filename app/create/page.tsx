@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import CreateForm from "./form";
 
 const Page = async () => {
-  const user = getUser();
+  const user = await getUser();
   if (!user) {
     redirect("/login");
   }

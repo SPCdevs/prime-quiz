@@ -1,14 +1,9 @@
 import { getUser } from "@/utils/database/auth";
 import { prisma } from "@/utils/database/prisma";
-import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const GET = async (request: NextRequest) => {
   const user = await getUser();
-
-  if (!user) {
-    return redirect("/login");
-  }
 
   const searchedTags = request.nextUrl.searchParams.get("tags")?.split(",");
 
@@ -45,7 +40,7 @@ export const GET = async (request: NextRequest) => {
       createdAt: true,
       history: {
         where: {
-          userId: user.id,
+          userId: user?.id,
         },
         select: {
           answer: true,
