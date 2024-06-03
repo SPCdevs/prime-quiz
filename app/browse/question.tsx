@@ -15,10 +15,13 @@ const Question = (post: QuestionProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<{
     answer: string;
     correct: boolean | null;
+    correctAnswer: string | null;
   }>({
     answer: "",
     correct: null,
+    correctAnswer: null,
   });
+
   const userLink = `/user/${post.user.username}`;
   const createdAt = new Date(post.createdAt);
 
@@ -26,7 +29,11 @@ const Question = (post: QuestionProps) => {
 
   useEffect(() => {
     if (post.history.length > 0) {
-      setSelectedAnswer(post.history[0]);
+      setSelectedAnswer({
+        answer: post.history[0].answer,
+        correct: post.history[0].correct,
+        correctAnswer: post.history[0].correctAnswer,
+      });
     }
   }, [post.history]);
 
@@ -45,6 +52,7 @@ const Question = (post: QuestionProps) => {
         setSelectedAnswer({
           answer: ans,
           correct: data.correct,
+          correctAnswer: data.correctAnswer,
         });
         if (data.correct !== null) {
           post.onAnswerSelected();
@@ -74,10 +82,10 @@ const Question = (post: QuestionProps) => {
                 selectedAnswer.answer === answer.answer
                   ? selectedAnswer.correct
                     ? "success"
-                    : selectedAnswer.correct === false
-                      ? "danger"
-                      : "default"
-                  : "default"
+                    : "danger"
+                  : answer.correct && selectedAnswer.correct === false
+                    ? "primary"
+                    : "default"
               }
               disabled={!(selectedAnswer.correct === null)}
               onClick={() => selectAnswer(answer.answer)}

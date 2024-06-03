@@ -11,6 +11,7 @@ export interface Post {
   };
   createdAt: string;
   history: {
+    correctAnswer: string | null;
     answer: string;
     correct: boolean;
   }[];
