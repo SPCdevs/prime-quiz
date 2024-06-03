@@ -14,4 +14,7 @@ export interface Post {
     answer: string;
     correct: boolean;
   }[];
+  tags: {
+    name: string;
+  }[];
 }

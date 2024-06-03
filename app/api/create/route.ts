@@ -7,6 +7,7 @@ import { z } from "zod";
 
 const postSchema = z.object({
   title: z.string().min(1).max(500),
+  tags: z.array(z.string()),
   options: z
     .array(
       z.object({
@@ -55,11 +56,18 @@ export const POST = async (request: Request) => {
     );
   }
 
+  const tags: { name: string }[] = post.data.tags.map((tag) => {
+    return { name: tag };
+  });
+
   await prisma.post.create({
     data: {
       userId: user.id,
       title: post.data.title,
       answers: post.data.options,
+      tags: {
+        create: tags,
+      },
     },
   });
 

@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardBody } from "@nextui-org/card";
+import { Card, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { useState, useEffect } from "react";
@@ -15,6 +15,8 @@ const Question = (post: Post, key: number) => {
   });
   const userLink = `/user/${post.user.username}`;
   const createdAt = new Date(post.createdAt);
+
+  const tagsList = post.tags.map((tag) => tag.name);
 
   useEffect(() => {
     if (post.history.length > 0) {
@@ -41,12 +43,14 @@ const Question = (post: Post, key: number) => {
 
   return (
     <Card className="min-h-96" key={key}>
-      <CardBody className="space-y-2 p-8">
-        <p>
-          <Link underline="hover" href={userLink}>
-            @{post.user.displayName}
-          </Link>
-          | On {createdAt.toLocaleDateString()}
+      <CardBody className="space-y-2 p-8 pb-0">
+        <p className="flex justify-between">
+          <span className="text-left">
+            <Link underline="hover" href={userLink}>
+              @{post.user.displayName}
+            </Link>
+          </span>
+          <span className="text-right"> {createdAt.toLocaleDateString()} </span>
         </p>
         <h3 className="text-3xl font-bold ">{post.title}</h3>
         <div className="flex flex-col gap-4 pt-8">
@@ -71,6 +75,13 @@ const Question = (post: Post, key: number) => {
           ))}
         </div>
       </CardBody>
+      <CardFooter className="p-8 pt-4 ">
+        Tags:{" "}
+        <span className="whitespace-pre text-primary">
+          {" "}
+          {tagsList.join(", ")}
+        </span>
+      </CardFooter>
     </Card>
   );
 };

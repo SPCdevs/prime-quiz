@@ -27,11 +27,13 @@ const NavigationBar = ({ user }: { user: User | null }) => {
             <Home className="mr-1 h-4 w-4" /> Home
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/create">
-            <Plus className="mr-1 h-4 w-4" /> Create
-          </Link>
-        </NavbarItem>
+        {user && (
+          <NavbarItem>
+            <Link color="foreground" href="/create">
+              <Plus className="mr-1 h-4 w-4" /> Create
+            </Link>
+          </NavbarItem>
+        )}
         <NavbarItem>
           <Link color="foreground" href="/browse">
             <GraduationCap className="mr-1 h-4 w-4" /> Browse
@@ -72,13 +74,15 @@ const NavigationBar = ({ user }: { user: User | null }) => {
             <Home className="mr-1 h-4 w-4" /> Home
           </Link>
         </NavbarMenuItem>
+        {user && (
+          <NavbarMenuItem>
+            <Link color="foreground" href="/create">
+              <Plus className="mr-1 h-4 w-4" /> Create
+            </Link>
+          </NavbarMenuItem>
+        )}
         <NavbarMenuItem>
-          <Link color="foreground" href="#">
-            <Plus className="mr-1 h-4 w-4" /> Create
-          </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <Link color="foreground" href="/">
+          <Link color="foreground" href="/browse">
             <GraduationCap className="mr-1 h-4 w-4" /> Browse
           </Link>
         </NavbarMenuItem>

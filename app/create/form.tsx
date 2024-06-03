@@ -4,11 +4,14 @@ import React, { FormEvent, useState } from "react";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Checkbox } from "@nextui-org/checkbox";
+import { Select, SelectItem } from "@nextui-org/react";
 import { Trash, Plus, Send } from "lucide-react";
+import quizTags from "@/utils/tags";
 
 const CreateForm = () => {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState(["", ""]);
+  const [tags, setTags] = useState<string[]>([]);
   const [correctAnswer, setCorrectAnswer] = useState<null | string>(null);
 
   const router = useRouter();
@@ -34,6 +37,7 @@ const CreateForm = () => {
       options: options.map((option) => {
         return { correct: option == correctAnswer, answer: option };
       }),
+      tags: tags,
     };
     fetch("/api/create", {
       method: "post",
@@ -57,7 +61,7 @@ const CreateForm = () => {
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
       />
-      <div className="my-8  space-y-4 rounded-lg bg-default-50 p-8">
+      <div className="my-8 space-y-4 rounded-lg bg-default-50 p-8">
         <h2 className="text-sm font-bold">Answers</h2>
         {options.map((option, index) => (
           <div key={index} className="flex items-center">
@@ -100,6 +104,23 @@ const CreateForm = () => {
         >
           <Plus className="mr-2 h-4 w-4" /> Add Answer
         </Button>
+      </div>
+      <div className="my-8 flex items-center gap-4 rounded-lg bg-default-50 p-4">
+        <h2 className="text-sm font-bold">Tags</h2>
+        <Select
+          selectionMode="multiple"
+          label="Select tags"
+          name="tags"
+          className="max-w-xs"
+          onSelectionChange={(keys) => {
+            const selectedKeys = Array.from(keys) as string[];
+            setTags(selectedKeys);
+          }}
+        >
+          {quizTags.map((quizTag) => (
+            <SelectItem key={quizTag.toLowerCase()}>{quizTag}</SelectItem>
+          ))}
+        </Select>
       </div>
       <Button type="submit" color="primary" variant="flat" className="w-full">
         <Send className="mr-2 h-4 w-4" /> Post Trivia

@@ -1,16 +1,37 @@
 import { getUser } from "@/utils/database/auth";
 import { prisma } from "@/utils/database/prisma";
 import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
   const user = await getUser();
 
   if (!user) {
     return redirect("/login");
   }
 
+  const searchedTags = request.nextUrl.searchParams.get("tags")?.split(",");
+
+  let tags: { name: string }[] = [];
+  if (searchedTags && searchedTags[0] != "") {
+    tags = searchedTags.map((tag: string) => {
+      return {
+        name: tag,
+      };
+    });
+  }
+
   const posts = await prisma.post.findMany({
+    where: {
+      tags:
+        tags.length > 0
+          ? {
+              some: {
+                OR: tags,
+              },
+            }
+          : undefined,
+    },
     select: {
       id: true,
       title: true,
@@ -29,6 +50,11 @@ export const GET = async () => {
         select: {
           answer: true,
           correct: true,
+        },
+      },
+      tags: {
+        select: {
+          name: true,
         },
       },
     },
