@@ -3,7 +3,8 @@ import { Tabs, Tab } from "@nextui-org/tabs";
 import ProfileSettings from "./ProfileSettings";
 import AccountSettings from "./AccountSettings";
 import AppearanceSettings from "./AppearanceSettings";
-import { UserIcon, Settings, SunMoon } from "lucide-react";
+import History from "./history";
+import { UserIcon, Settings, SunMoon, HistoryIcon } from "lucide-react";
 import { User } from "lucia";
 
 const TabsMenu = ({ user }: { user: User }) => {
@@ -32,7 +33,17 @@ const TabsMenu = ({ user }: { user: User }) => {
       >
         <ProfileSettings user={user} />
       </Tab>
-
+      <Tab
+        key="history"
+        title={
+          <div className="flex items-center">
+            <HistoryIcon className="mr-2 h-4 w-4" />
+            History
+          </div>
+        }
+      >
+        <History />
+      </Tab>
       <Tab
         key="account"
         title={
