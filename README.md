@@ -22,6 +22,8 @@ cd /path/to/dir
 docker-compose up --build
 ```
 
+After that, browse to `http://localhost:3000` to access the site. (Note that this requires port 3000 to be free or change it in the `docker-compose` file)
+
 The docker compose script contains all the components required for running the app such as `postgres`.
 The `docker-compose` script also contains pg admin for the purpose of monitoring the database. However it is not required for the function of the app so it can be easily be disabled by commenting it out.
 

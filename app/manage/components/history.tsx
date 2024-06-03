@@ -50,7 +50,7 @@ export default function History() {
       <div className="my-8 flex flex-wrap gap-4">
         {history.length === 0 ? (
           <p className="text-center text-gray-500">
-            You haven't done any trivia questions yet. Go and try some!
+            You {"haven't"} done any trivia questions yet. Go and try some!
           </p>
         ) : (
           history.map((post, key) => (
